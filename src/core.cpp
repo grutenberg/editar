@@ -23,6 +23,7 @@ void BufferModule::resize_buffer(){
 	buffer_len*=2;
 	char* new_buff = (char*)malloc(sizeof(char)*buffer_len);
 	strcpy(new_buff, buffer);
+	free(buffer);
 	buffer = new_buff;
 }
 
@@ -32,4 +33,18 @@ void BufferModule::at_pointer(char new_char){
 
 void BufferModule::print_buffer(){
 	cout<<buffer<<endl;
+}
+
+/* ---------- COMPOSITE MODULE ----------- */
+
+void CompositeModule :: print_buffer() {
+	cout<<"--------------"<<endl;
+	for (CoreModule* module : modules) {
+		module->print_buffer();
+		cout<<endl;
+	}
+}
+
+void CompositeModule :: add_module(CoreModule* new_module){
+	modules.push_back(new_module);
 }
